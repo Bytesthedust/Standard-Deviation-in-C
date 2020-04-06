@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+double values[20], sum=0.0, num_elements, average, square, sum_0=0.0,variance, result, population_std_result, sample_std_result;
+char equation_choice;
+
+
+double get_numbers(void)
+{
+    printf("How many elements(up to twenty): ");//asks for how many elements are being inputted
+    scanf("%lf", &num_elements);
+
+    printf("Enter floating-point numbers: ");
+    for(int i=0; i <=num_elements-1; i++)//adds each element inputted and stores it in sum
+    {
+        scanf("%lf",&values[i]);//user enter numbers
+        sum += values[i];
+    }
+    return 0;
+}
+
+
+char pop_or_sample(void)
+{
+    printf("Is it a Population(P) or a Sample(S): ");
+    scanf(" %c", &equation_choice);
+    return 0;
+}
+
+
+double calculate_population_std_dev(void)
+{
+    average = sum / num_elements;
+
+    for(int i =0; i<=num_elements-1; i++)//subtracts each element by the average, squares it, then calculates the sum
+    {
+        square = (values[i] - average)*(values[i]-average);
+        sum_0 += square;
+    }
+
+    variance = sum_0 / (num_elements);
+    if(equation_choice == 'P')
+    {
+        variance = sum_0 / (num_elements);
+        result = sqrt(variance);//takes the sqaure root of the variance
+    }
+
+    if(equation_choice == 'S')
+    {
+    variance = sum_0 / (num_elements-1);
+    result = sqrt(variance);//takes the sqaure root of the variance
+    }
+
+
+    return result; //printf("Standard deviation: %.2lf", result);
+}
+
+
+double calculate_sample_std_dev(void)
+{
+    average = sum / num_elements;
+
+    for(int i =0; i<=num_elements-1; i++)//subtracts each element by the average, squares it, then calculates the sum
+   {
+        square = (values[i] - average)*(values[i]-average);
+        sum_0 += square;
+
+   }
+
+     variance = sum_0 / (num_elements-1);
+     result = sqrt(variance);//takes the sqaure root of the variance
+
+     return result; //printf("Standard deviation: %.2lf", result);
+}
+
+
+
+int main(void)
+{
+    get_numbers();
+    pop_or_sample();
+    if(equation_choice == 'P')
+    {
+        population_std_result = calculate_population_std_dev();
+        printf("Population Standard deviation: %.2lf\n", result);
+    }
+
+    if(equation_choice == 'S')
+    {
+        sample_std_result = calculate_sample_std_dev();
+        printf("Sample Standard deviation: %.2lf", sample_std_result);
+    }
+    return 0;
+}
